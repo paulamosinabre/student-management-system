@@ -96,7 +96,14 @@ public class Manager {
             System.out.println("Invalid number!");
         }
     }
-
+    
+    public void sort(){
+        
+    }
+    
+    public void search(){
+        
+    }
     public void showDetails() {
         System.out.println("================================================================================================================");
         System.out.printf("%-4s | %-12s | %-20s | %-8s | %-10s | %-10s | %-4s%n",
