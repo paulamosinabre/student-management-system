@@ -9,7 +9,7 @@ public class StudentManagement {
 
     public static void startPage(Scanner scan) {
         while (true) {
-            System.out.println("\n========== Welcome to DNM University ===========");
+            System.out.println("\n============ Welcome to DNM Academy =============");
             System.out.println("1. Sign-up");
             System.out.println("2. Login");
             System.out.println("0. Exit");
@@ -38,6 +38,7 @@ public class StudentManagement {
 
     public static void signUp(Scanner scan) {
         System.out.println("\n=========== Registration ============");
+        //create a validation that is must end with @gmail.com, @outlook.com, and etc...
         System.out.print("Enter your e-mail: ");
         String email = scan.nextLine();
 
@@ -91,21 +92,21 @@ public class StudentManagement {
     public static void home(Scanner scan, User user) {
         //pre-defined students
         Student student;
-        student = new Student("2022-1056789", "Joshua Hong", "BSCE", "4th Year", "Male", 4.0);
-        student = new Student("2022-1089224", "Hyunjin Hwang", "BSArch", "4th Year", "Male", 3.25);
-        student = new Student("2025-1023756", "Chenle Zhong", "BSIT-MWA", "1st Year", "Male", 3.0);
-        student = new Student("2023-1034257", "Giselle Aeri Uchinaga", "BSArch", "3rd Year", "Female", 3.9);
-        student = new Student("2023-1020951", "Karina Yoo", "BSArch", "3rd Year", "Female", 3.86);
-
+        Manager manager = new Manager();
+        manager.add(new Student("2022-1056789", "Joshua Hong", "Male", "BSCE", "4th Year", 4.0));
+        manager.add(new Student("2022-1089224", "Hyunjin Hwang", "Male", "BSArch", "4th Year", 3.25));
+        manager.add(new Student("2025-1023756", "Chenle Zhong", "Male", "BSIT-MWA", "1st Year", 3.0));
+        manager.add(new Student("2023-1034257", "Aeri Uchinaga", "Female", "BSArch", "3rd Year", 3.9));
+        manager.add(new Student("2023-1020951", "Karina Yoo", "Female", "BSArch", "3rd Year", 3.86));
         while (true) {
-            System.out.println("\n========= DNM University =========");
+            System.out.println("\n=========== DNM Academy ===========");
             System.out.println("1. Add Student");
             System.out.println("2. View Student");
             System.out.println("3. Update Student");
             System.out.println("4. Delete Student");
-            System.out.println("5. Display All Student");
-            System.out.println("6. Search Student");
-            System.out.println("7. Sort Student");
+            System.out.println("5. Search Student");
+            System.out.println("6. Sort Student");
+            System.out.println("7. Display Top 3 Students");
             System.out.println("8. View My Information");
             System.out.println("9. Back to Start Page");
             System.out.println("0. Exit");
@@ -113,12 +114,49 @@ public class StudentManagement {
 
             System.out.print("Enter your choice: ");
             int action = scan.nextInt();
+            scan.nextLine();
 
             switch (action) {
                 case 1:
+                    System.out.print("\nEnter name: ");
+                    String name = scan.nextLine();
 
+                    //validation that it must be male or female only
+                    System.out.print("Enter Gender");
+                    String gender = scan.nextLine();
+                    if (!(gender.equalsIgnoreCase("Female") || gender.equalsIgnoreCase("Male"))) {
+                        System.out.println("Invalid gender!");
+                        break;
+                    }
+
+                    System.out.println("Enter course: (BSArch, BSCE, BSIT-MWA, BSCS-ML, BSCPE");
+                    String course = scan.nextLine();
+
+                    if (!(course.equalsIgnoreCase("BSARCH") || course.equalsIgnoreCase("BSCE") || course.equalsIgnoreCase("BSIT-MWA") || course.equalsIgnoreCase("BSCS-ML") || course.equalsIgnoreCase("BSCPE"))) {
+                        System.out.println("Invalid course!");
+                        break;
+                    }
+
+                    System.out.println("Enter year level: ");
+                    String year = scan.nextLine();
+
+                    System.out.println("Enter GPA");
+                    double GPA = scan.nextDouble();
+
+                    //TO DO: GENERATE A RANDOM NUMBER FOR STUDENT ID
+                    manager.add(new Student("2024-10978923", name, gender, course, year, GPA));
+                    break;
+
+                case 2:
+                    manager.showDetails();
+                    break;
+
+                case 3:
+                    System.out.println("\n============== Update ===============");
+                    manager.showDetails();
+                    
                 case 8:
-                    System.out.println("================= My Information ==================");
+                    System.out.println("\n================= My Information ==================");
                     user.showDetails();
                     break;
                 case 9:
