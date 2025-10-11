@@ -154,7 +154,45 @@ public class StudentManagement {
                 case 3:
                     System.out.println("\n============== Update ===============");
                     manager.showDetails();
+                    System.out.print("\nChoose a number to update: ");
+                    int index = scan.nextInt();
+                    scan.nextLine();
+
+                    System.out.println("\n1. Name");
+                    System.out.println("2. Gender");
+                    System.out.println("3. Course");
+                    System.out.println("4. Year");
+                    System.out.println("5. GPA");
+
+                    System.out.println("Choose among the 5 to update: ");
+                    int update = scan.nextInt();
+                    scan.nextLine();
+
+                    System.out.print("Enter new information: ");
+                    String newInfo = scan.nextLine();
+                    if (update == 1) {
+                        manager.update(newInfo, index, 1);
+                    } else if (update == 2) {
+                        manager.update(newInfo, index, 2);
+                    } else if (update == 3) {
+                        manager.update(newInfo, index, 3);
+                    } else if (update == 4) {
+                        manager.update(newInfo, index, 4);
+                    } else if (update == 5) {
+                        double gpa = Double.parseDouble(newInfo);
+                        manager.updateGPA(gpa, index);
+                    } else {
+                        System.out.println("Invalid number!");
+                    }
                     
+                case 4:
+                    manager.showDetails();
+                    System.out.print("\nEnter a number to delete: ");
+                    int num = scan.nextInt();
+                    
+                    manager.delete(num);
+                    break;
+                
                 case 8:
                     System.out.println("\n================= My Information ==================");
                     user.showDetails();
