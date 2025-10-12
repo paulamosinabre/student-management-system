@@ -15,7 +15,7 @@ public class Manager {
     }
 
     public void delete(int index) {
-        if (index - 1 > students.size() && index - 1 < 0) {
+        if (index - 1 >= 0 && index - 1 < students.size()) {
             students.remove(index);
         } else {
             System.out.println("Invalid number!");
@@ -24,7 +24,7 @@ public class Manager {
     //Solution 1
 /*
     public void updateName(String name, int index) {
-        if (index - 1 > students.size() && index - 1 < 0) {
+        if (index - 1 >= 0 && index - 1 < students.size()) {
             System.out.println("The name has been updated from " + this.students.get(index - 1).getName() + " to" + name);
             this.students.get(index - 1).setName(name);
         } else {
@@ -33,7 +33,7 @@ public class Manager {
     }
 
     public void updateGender(String gender, int index) {
-        if (index - 1 > students.size() && index - 1 < 0) {
+        if (index - 1 >= 0 && index - 1 < students.size()) {
             System.out.println("The gender has been updated from " + this.students.get(index - 1).getGender() + " to" + gender);
             this.students.get(index - 1).setGender(gender);
         } else {
@@ -42,7 +42,7 @@ public class Manager {
     }
 
     public void updateCourse(String course, int index) {
-        if (index - 1 > students.size() && index - 1 < 0) {
+        if (index - 1 >= 0 && index - 1 < students.size()) {
             System.out.println("The course has been updated from " + this.students.get(index - 1).getCourse() + " to" + course);
             this.students.get(index - 1).setCourse(course);
         } else {
@@ -51,7 +51,7 @@ public class Manager {
     }
 
     public void updateYear(String year, int index) {
-        if (index - 1 > students.size() && index - 1 < 0) {
+        if (index - 1 >= 0 && index - 1 < students.size()) {
             System.out.println("The year has been updated from " + this.students.get(index - 1).getYear() + " to" + year);
             this.students.get(index - 1).setYear(year);
         } else {
@@ -62,7 +62,7 @@ public class Manager {
 
     //Solution 2
     public void updateGPA(double GPA, int index) {
-        if (index - 1 > students.size() && index - 1 < 0) {
+        if (index - 1 >= 0 && index - 1 < students.size()) {
             System.out.println("The GPA has been updated from " + this.students.get(index - 1).getGPA() + " to" + GPA);
             this.students.get(index - 1).setGPA(GPA);
         } else {
@@ -71,7 +71,7 @@ public class Manager {
     }
 
     public void update(String update, int index, int classification) {
-        if (index - 1 > students.size() && index - 1 < 0) {
+        if (index - 1 >= 0 && index - 1 < students.size()) {
             switch (classification) {
                 case 1:
                     System.out.println("The name has been updated from " + this.students.get(index - 1).getName() + " to" + update);
