@@ -16,12 +16,12 @@ public class Manager {
 
     public void delete(int index) {
         if (index - 1 >= 0 && index - 1 < students.size()) {
-            students.remove(index-1);
+            students.remove(index - 1);
         } else {
             System.out.println("Invalid number!");
         }
     }
-    
+
     public void updateGPA(double GPA, int index) {
         if (index - 1 >= 0 && index - 1 < students.size()) {
             System.out.println("The GPA has been updated from " + this.students.get(index - 1).getGPA() + " to " + GPA);
@@ -57,15 +57,50 @@ public class Manager {
             System.out.println("Invalid number!");
         }
     }
-    
-    
-    public void sort(){
-        
+
+    public void search(String search) {
+        boolean found = false;
+        for (Student student : students) {
+            if (student.getId().equals(search) || student.getName().equals(search) || student.getCourse().equals(search) || student.getGPA() == Integer.parseInt(search)) {
+                found = true;
+                showDetails();
+            }
+        }
+
+        if (!found) {
+            System.out.println("Student not found!");
+        }
+    }
+
+    public void sortBy(int type) {
+        switch (type) {
+            case 1:
+                students.sort((s1, s2) -> s1.getName().compareTo(s2.getName()));
+                showDetails();
+                break;
+                
+            case 2:
+                break;
+                
+            case 3:
+                students.sort((s1, s2) -> Double.compare(s1.getGPA(), s2.getGPA()));
+                showDetails();
+                break;
+                
+            case 4:
+                break;
+            
+            case 5:
+                students.sort((s1, s2) -> s1.getCourse().compareTo(s2.getCourse()));
+                break;
+                
+        }
     }
     
-    public void search(){
+    public void topStudents(){
         
     }
+
     public void showDetails() {
         System.out.println("\n================================================================================================================");
         System.out.printf("%-4s | %-12s | %-20s | %-8s | %-10s | %-10s | %-4s%n",
