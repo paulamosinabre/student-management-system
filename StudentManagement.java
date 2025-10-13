@@ -61,7 +61,6 @@ public class StudentManagement {
     }
 
     public static void login(Scanner scan) {
-
         System.out.println("\n============ Log-in ===============");
         System.out.print("Enter your username: ");
         String username = scan.nextLine();
@@ -178,13 +177,13 @@ public class StudentManagement {
         //TO DO: GENERATE A RANDOM NUMBER FOR STUDENT ID
         String id = "2025-" + (1000000 + (int) (Math.random() * 10000000));
         manager.add(new Student(id, name, gender, course, year, GPA));
-        
+
         System.out.println("Successfully Added!");
     }
 
     public static void updateStudent(Scanner scan, Manager manager) {
         manager.showDetails();
-        //Palitan ng enter a student id to update
+        //Palitan ng enter student id to update
         System.out.print("\nEnter number to update: ");
         int index = scan.nextInt();
         scan.nextLine();
@@ -223,13 +222,28 @@ public class StudentManagement {
                 break;
         }
     }
-    
-    public static void searchStudent(Scanner scan, Manager manager){
-        
+
+    public static void searchStudent(Scanner scan, Manager manager) {
+        System.out.println("\n============== Search ===============");
+        System.out.print("Search for: ");
+        String search = scan.nextLine();
+
+        manager.search(search);
+
     }
-    
-    public static void sortStudent(Scanner scan, Manager manager){
-        
+
+    public static void sortStudent(Scanner scan, Manager manager) {
+        System.out.println("\n============== Sort ===============");
+        System.out.println("1. Name (From A-Z)");
+        System.out.println("2. Name (From Z-A)");
+        System.out.println("3. GPA (From Lowest-Highest)");
+        System.out.println("4. GPA (From Highest-Lowest)");
+        System.out.println("5. Course");
+
+        int sortChooser = scan.nextInt();
+        scan.nextLine();
+
+        manager.sortBy(sortChooser);
     }
 
     public static void home(Scanner scan, User user) {
@@ -282,15 +296,21 @@ public class StudentManagement {
                     break;
 
                 case 5:
-                    System.out.println("\n============== Search ===============");
+                    searchStudent(scan, manager);
                     break;
+
                 case 6:
-                    
+                    sortStudent(scan, manager);
                     break;
+
+                case 7:
+                    break;
+
                 case 8:
                     System.out.println("\n================= My Information ==================");
                     user.showDetails();
                     break;
+
                 case 9:
                     startPage(scan);
                     break;
