@@ -11,6 +11,7 @@ public class Manager {
     }
 
     public void add(Student student) {
+        //gumawa ng if student alrd exists di na ma-aaadd
         students.add(student);
     }
 
