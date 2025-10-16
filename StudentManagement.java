@@ -9,7 +9,7 @@ public class StudentManagement {
 
     public static void startPage(Scanner scan) {
         while (true) {
-            System.out.println("\n============ Welcome to DNM Academy =============");
+            System.out.println("\n============ Welcome to DNM University =============");
             System.out.println("1. Sign-up");
             System.out.println("2. Login");
             System.out.println("0. Exit");
@@ -87,55 +87,116 @@ public class StudentManagement {
         }
     }
 
-    public static String chooser(Scanner scan, String[] str, String label){
+    public static String chooser(Scanner scan, String[] str, String label) {
         System.out.print("\n" + label);
-        for(int i = 0; i < str.length; i++){
-            System.out.println((i+1) + ". " + str[i]);
+        for (int i = 0; i < str.length; i++) {
+            if (i == 0) {
+                System.out.println("\n" + (i + 1) + ". " + str[i]);
+            } else {
+                System.out.println((i + 1) + ". " + str[i]);
+            }
         }
-        
+
         System.out.print("Choose a " + label.toLowerCase() + ": ");
         int option = scan.nextInt();
         scan.nextLine();
-        
-        if(option >= 1 && option <= str.length){
-            return str[option];
+
+        if (option >= 1 && option <= str.length) {
+            return str[option - 1];
         } else {
             System.out.println("Invalid! number");
         }
         return " ";
     }
-    
+
     public static void addStudent(Scanner scan, Manager manager) {
-        System.out.print("\nEnter name: ");
-        String name = scan.nextLine();
+        System.out.print("\nEnter first name: ");
+        String firstName = scan.nextLine();
+
+        System.out.print("Enter middle name (leave blank if none): ");
+        String middleName = scan.nextLine();
+        
+        System.out.print("Enter last name: ");
+        String lastName = scan.nextLine();
 
         String[] genders = {"Male", "Female"};
         String gender = chooser(scan, genders, "Gender");
-        
+
         String[] courses = {"BSArch", "BSCE", "BSCPE", "BSIT-MWA", "BSCS-ML"};
         String course = chooser(scan, courses, "Course");
-        
+
         String[] years = {"1st Year", "2nd Year", "3rd Year", "4th Year"};
-        String year = chooser(scan, years, "Years");
-        
+        String year = chooser(scan, years, "Year");
+
         System.out.print("Enter GPA: ");
         double GPA = scan.nextDouble();
 
-        String id = "2025-" + (1000000 + (int) (Math.random() * 10000000));
-        manager.add(new Student(id, name, gender, course, year, GPA));
-
-        System.out.println("Successfully Added!");
+        //TO DO: GENERATE A RANDOM NUMBER FOR STUDENT ID
+        String id = "2025-" + (1000000 + (int) (Math.random() * 1000000));
+        
+        //validation to check if middle name is empty or not
+        if(middleName.isEmpty()){
+            manager.add(new Student(id, firstName, lastName, gender, course, year, GPA));
+        } else {
+            manager.add(new StudentFullName(id, firstName, middleName, lastName, gender, course, year, GPA));
+        }
+        
     }
 
     public static void updateStudent(Scanner scan, Manager manager) {
         manager.showDetails();
-        System.out.print("\nEnter student id to update: ");
-        String id = scan.nextLine();
-
-        if(manager.doesStudentExist(id)){
-            
-        } else {
-            System.out.println("Student not found!");
+        System.out.print("\nEnter no. to update: ");
+        int num = scan.nextInt();
+        scan.nextLine();
+        
+        //check if index is valid
+        if (!manager.isItInTheList(num)) {
+            return;
+        }
+        
+        System.out.println("\nUpdate: ");
+        System.out.println("1. First Name");
+        System.out.println("2. Last Name");
+        System.out.println("3. Gender");
+        System.out.println("4. Course");
+        System.out.println("5. Year");
+        System.out.println("6. GPA");
+        System.out.print("\nChoose to update: ");
+        int updateOption = scan.nextInt();
+        scan.nextLine();
+        switch (updateOption) {
+            case 1:
+                System.out.print("\nEnter first name: ");
+                String firstName = scan.nextLine();
+                manager.updateFirstName(firstName, num);
+                break;
+            case 2:
+                System.out.print("\nEnter last name: ");
+                String lastName = scan.nextLine();
+                manager.updateLastName(lastName, num);
+                break;
+            case 3:
+                String[] genders = {"Male", "Female"};
+                String gender = chooser(scan, genders, "Gender");
+                manager.updateGender(gender, num);
+                break;
+            case 4:
+                String[] courses = {"BSArch", "BSCE", "BSCPE", "BSIT-MWA", "BSCS-ML"};
+                String course = chooser(scan, courses, "Course");
+                manager.updateCourse(course, num);
+                break;
+            case 5:
+                String[] years = {"1st Year", "2nd Year", "3rd Year", "4th Year"};
+                String year = chooser(scan, years, "Year");
+                manager.updateYear(year, num);
+                break;
+            case 6:
+                System.out.print("\nEnter GPA:");
+                double GPA = scan.nextDouble();
+                manager.updateGPA(GPA, num);
+                break;
+            default:
+                System.out.println("Invalid number!");
         }
 
     }
@@ -156,24 +217,22 @@ public class StudentManagement {
         System.out.println("4. GPA (From Highest-Lowest)");
         System.out.println("5. Course");
 
-        System.out.println("Sort by: ");
+        System.out.print("Sort by: ");
         int sortChooser = scan.nextInt();
         scan.nextLine();
 
         manager.sortBy(sortChooser);
     }
-    
-    
 
     public static void home(Scanner scan, User user) {
         //pre-defined students
         Student student;
         Manager manager = new Manager();
-        manager.add(new Student("2022-1056789", "Alyssa Nicole S. Bacsal", "Female", "BSCE", "4th Year", 3.6));
-        manager.add(new Student("2022-1089224", "Diane Nicole L. Mondejar", "Female", "BSArch", "4th Year", 3.5));
-        manager.add(new Student("2025-1023756", "Paula Bianca P. Mosinabre", "Female", "BSIT-MWA", "1st Year", 3.7));
-        manager.add(new Student("2023-1034257", "Samantha Lorin G. Hidalgo", "Female", "BSArch", "3rd Year", 3.4));
-        manager.add(new Student("2023-1020951", "Jayma Marie M. Magsino", "Female", "BSArch", "3rd Year", 3.25));
+        manager.add(new Student("2022-1056789", "Alyssa Nicole", "Bacsal", "Female", "BSCE", "4th Year", 4.0));
+        manager.add(new Student("2022-1089224", "Diane Nicole", "Mondejar", "Female", "BSArch", "4th Year", 3.99));
+        manager.add(new Student("2025-1023756", "Paula Bianca", "Mosinabre", "Female", "BSIT-MWA", "1st Year", 3.98));
+        manager.add(new Student("2023-1034257", "Samantha Lorin", "Hidalgo", "Female", "BSArch", "3rd Year", 3.97));
+        manager.add(new Student("2023-1020951", "Jayma Marie", "Magsino", "Female", "BSArch", "3rd Year", 3.96));
         while (true) {
             System.out.println("\n=========== DNM Academy ===========");
             System.out.println("1. Add Student");
@@ -211,7 +270,6 @@ public class StudentManagement {
                     int num = scan.nextInt();
 
                     manager.delete(num);
-                    System.out.println("Successfully deleted!");
                     break;
 
                 case 5:
