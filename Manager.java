@@ -13,7 +13,6 @@ public class Manager {
     public void add(Student student) {
         if (student.getGPA() >= 0 && student.getGPA() <= 4.0) {
             students.add(student);
-            System.out.println("Successfully Added!");
         } else {
             System.out.println("Could not add student. Make sure the GPA does not exceed 4.0");
         }
