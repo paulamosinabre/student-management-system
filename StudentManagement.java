@@ -64,7 +64,7 @@ public class StudentManagement {
     }
 
     public static void signUp(Scanner scan) {
-        System.out.println("\n=========== Registration ============");
+        System.out.println("\n================ Registration ==================");
         //checks if email ends with @gmail.com, outlook, and dnmu.edu.ph
         String email = "";
         boolean validEmail = false;
@@ -110,8 +110,8 @@ public class StudentManagement {
             }
 
         }
-
-        System.out.println("You have successfully created an account!");
+        System.out.println("================================================");
+        System.out.println("\nYou have successfully created an account!");
 
         User user = new User(email, contactNumber, username, password);
         usersList.add(user);
@@ -132,8 +132,8 @@ public class StudentManagement {
             if (user.getUsername().equals(username)) {
                 found = true;
                 if (user.getPassword().equals(password)) {
-                    System.out.println("\nWelcome back, " + username + "!");
                     System.out.println("================================================");
+                    System.out.println("\nWelcome back, " + username + "!");
                     home(scan, user);
                 } else {
                     System.out.println("Incorrect Password. Try Again");
@@ -142,32 +142,34 @@ public class StudentManagement {
         }
 
         if (!found) {
-            System.out.println("Create an account first!");
+            System.out.println("================================================");
+            System.out.println("\nCreate an account first!");
             signUp(scan);
         }
     }
 
     public static String chooser(Scanner scan, String[] str, String label) {
-        System.out.print("\n" + label);
-        for (int i = 0; i < str.length; i++) {
-            if (i == 0) {
-                System.out.println("\n" + (i + 1) + ". " + str[i]);
+        while (true) {
+            System.out.print("\n" + label);
+            for (int i = 0; i < str.length; i++) {
+                if (i == 0) {
+                    System.out.println("\n" + (i + 1) + ". " + str[i]);
+                } else {
+                    System.out.println((i + 1) + ". " + str[i]);
+                }
+            }
+
+            System.out.print("Choose a " + label.toLowerCase() + ": ");
+            int option = scan.nextInt();
+            scan.nextLine();
+
+            if (option >= 1 && option <= str.length) {
+                return str[option - 1];
             } else {
-                System.out.println((i + 1) + ". " + str[i]);
+                System.out.println("Invalid number! Try again");
             }
         }
 
-        System.out.print("Choose a " + label.toLowerCase() + ": ");
-        int option = scan.nextInt();
-        scan.nextLine();
-
-        if (option >= 1 && option <= str.length) {
-            return str[option - 1];
-        } else {
-            System.out.println("Invalid! number");
-            
-        }
-        return " ";
     }
 
     public static void addStudent(Scanner scan) {
@@ -212,6 +214,7 @@ public class StudentManagement {
 
         //check if index is valid
         if (!manager.isItInTheList(num)) {
+            System.out.println("Invalid number!");
             return;
         }
 
@@ -229,6 +232,7 @@ public class StudentManagement {
             case 1:
                 System.out.print("\nEnter first name: ");
                 String firstName = scan.nextLine();
+                
                 manager.updateFirstName(firstName, num);
                 break;
             case 2:
@@ -278,21 +282,13 @@ public class StudentManagement {
     }
 
     public static void viewTotalNum(String category, String[] items) {
-        System.out.println("\n" + category + ":");
+        System.out.println(category + ":");
         for (int i = 0; i < items.length; i++) {
             System.out.println((i + 1) + ". " + items[i] + ": " + manager.totalStudents(category, items[i]));
         }
     }
 
     public static void home(Scanner scan, User user) {
-        //pre-defined students
-        Student student;
-        manager.add(new Student("2022-1056789", "Alyssa Nicole", "Bacsal", "Female", "BSCE", "4th Year", 4.0));
-        manager.add(new Student("2022-1089224", "Diane Nicole", "Mondejar", "Female", "BSArch", "4th Year", 3.99));
-        manager.add(new Student("2025-1023756", "Paula Bianca", "Mosinabre", "Female", "BSIT-MWA", "1st Year", 4.00));
-        manager.add(new Student("2023-1034257", "Samantha Lorin", "Hidalgo", "Female", "BSArch", "3rd Year", 3.97));
-        manager.add(new Student("2023-1020951", "Jayma Marie", "Magsino", "Female", "BSArch", "3rd Year", 3.96));
-        manager.add(new StudentFullName("2024-1070039", "John Laurenz", "Senita", "Obrador", "Male", "BSCS-ML", "2nd Year", 3.7));
         while (true) {
             System.out.println("\n================ DNM University ===============");
             System.out.println("1. Add Student");
@@ -319,7 +315,6 @@ public class StudentManagement {
 
                 case 2:
                     updateStudent(scan);
-                    manager.showDetails();
                     break;
 
                 case 3:
@@ -353,14 +348,14 @@ public class StudentManagement {
                     String[] courses = {"BSArch", "BSCE", "BSCpE", "BSIT-MWA", "BSCS-ML"};
                     String[] years = {"1st Year", "2nd Year", "3rd Year", "4th Year"};
                     System.out.println("\n--------------- No. of Students -----------------");
-                    
+
                     viewTotalNum("Gender", genders);
                     viewTotalNum("Course", courses);
                     viewTotalNum("Year", years);
                     System.out.println("------------------------------------------------");
                     break;
                 case 9:
-                    System.out.println("\n=============== My Information ================");
+                    System.out.println("\n=============== My Information =================");
                     user.showDetails();
                     System.out.println("================================================");
                     break;
@@ -368,6 +363,9 @@ public class StudentManagement {
                 case 10:
                     startPage(scan);
                     break;
+                case 0:
+                    System.out.println("Closing...");
+                    System.exit(0);
                 default:
                     System.out.println("Invalid number! Please type a number between 0-10.");
             }
@@ -375,6 +373,24 @@ public class StudentManagement {
     }
 
     public static void main(String[] args) {
+        //pre-defined students
+        manager.add(new Student("2022-1056789", "Alyssa Nicole", "Bacsal", "Female", "BSCE", "4th Year", 4.00));
+        manager.add(new Student("2022-1089224", "Diane Nicole", "Mondejar", "Female", "BSCS-ML", "4th Year", 3.99));
+        manager.add(new Student("2025-1023756", "Paula Bianca", "Mosinabre", "Female", "BSIT-MWA", "1st Year", 3.98));
+        manager.add(new Student("2023-1034257", "Samantha Lorin", "Hidalgo", "Female", "BSArch", "3rd Year", 3.97));
+        manager.add(new Student("2023-1020951", "Jayma Marie", "Magsino", "Female", "BSArch", "3rd Year", 3.96));
+        manager.add(new StudentFullName("2024-1070039", "John Laurenz", "Senita", "Obrador", "Male", "BSCS-ML", "2nd Year", 3.70));
+        manager.add(new Student("2023-1020991", "John Lloyd", "Guerrrero", "Male", "BSIT-MWA", "2nd Year", 2.10));
+        manager.add(new StudentFullName("2025-1012345", "Angelica", "Louise", "Santos", "Female", "BSCE", "3rd Year", 1.00));
+        manager.add(new Student("2025-1023456", "Ramon", "Garcia", "Male", "BSArch", "2nd Year", 2.78));
+        manager.add(new StudentFullName("2025-1034567", "Kristine", "May", "Mendoza", "Female", "BSCpE", "1st Year", 1.00));
+        manager.add(new Student("2025-1045678", "Daniel", "Reyes", "Male", "BSIT-MWA", "4th Year", 3.22));
+        manager.add(new StudentFullName("2025-1056789", "Delila", "Macapagal", "Arroyo", "Female", "BSCS-ML", "2nd Year", 3.68));
+        manager.add(new Student("2025-1067890", "Miguel", "Cruz", "Male", "BSCE", "3rd Year", 3.00));
+        manager.add(new StudentFullName("2025-1078901", "Camilla", "Benzon", "Cabello", "Female", "BSCpE", "1st Year", 2.34));
+        manager.add(new Student("2025-1089012", "Kalix", "Juarez", "Male", "BSCpE", "4th Year", 2.97));
+        manager.add(new StudentFullName("2025-1090123", "Anecka", "Juanita", "Cruz", "Female", "BSCS-ML", "3rd Year", 3.72));
+        manager.add(new Student("2025-1101234", "Luis", "Antonio", "Male", "BSIT-MWA", "2nd Year", 3.15));
 
         Scanner scan = new Scanner(System.in);
         startPage(scan);
