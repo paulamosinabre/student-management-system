@@ -11,13 +11,11 @@ public class Manager {
     }
 
     public void add(Student student) {
-        for (int i = 0; i < students.size(); i++) {
-            if ((!(students.get(i).getFullName().equals(student.getFullName()))
-                    && student.getGPA() >= 0 && student.getGPA() <= 4.0)) {
-                students.add(student);
-            } else {
-                System.out.println("Could not add student. Make sure the GPA does not exceed 4.0");
-            }
+
+        if (student.getGPA() >= 0 && student.getGPA() <= 4.0) {
+            students.add(student);
+        } else {
+            System.out.println("Could not add student. Make sure the GPA does not exceed 4.0");
         }
     }
 
@@ -168,60 +166,29 @@ public class Manager {
         }
     }
 
-    public void totalStudents() {
-        String[] courses = {"BSArch", "BSCE", "BSCpE", "BSIT-MWA", "BSCS-ML"};
-        System.out.println("Courses:");
+    public int totalStudents(String category, String specification) {
+        int count = 0;
 
-        //iterating by course
-        for (int i = 0; i < courses.length; i++) {
-            String course = courses[i];
-            int count = 0;
-
-            //iterate all students by specific course
-            for (int j = 0; j < students.size(); j++) {
-                Student s = students.get(j);
-                if (s.getCourse().equalsIgnoreCase(course)) {
-                    count++;
-                }
+        for (Student student : students) {
+            switch (category) {
+                case "Gender":
+                    if (student.getGender().equals(specification)) {
+                        count++;
+                    }
+                    break;
+                case "Course":
+                    if (student.getCourse().equals(specification)) {
+                        count++;
+                    }
+                    break;
+                case "Year":
+                    if (student.getYear().equals(specification)) {
+                        count++;
+                    }
+                    break;
             }
-            System.out.println((i + 1) + ". " + course + " - " + count);
         }
-
-        String[] genders = {"Male", "Female"};
-        System.out.println("\nGender:");
-
-        //iterating by gender
-        for (int i = 0; i < genders.length; i++) {
-            String gender = genders[i];
-            int count = 0;
-
-            //iterate all students by specific course
-            for (int j = 0; j < students.size(); j++) {
-                Student s = students.get(j);
-                if (s.getGender().equalsIgnoreCase(gender)) {
-                    count++;
-                }
-            }
-            System.out.println((i + 1) + ". " + gender + " - " + count);
-        }
-
-        String[] years = {"1st Year", "2nd Year", "3rd Year", "4th Year"};
-        System.out.println("\nYear:");
-
-        //iterating by course
-        for (int i = 0; i < years.length; i++) {
-            String year = years[i];
-            int count = 0;
-
-            //iterate all students by specific course
-            for (int j = 0; j < students.size(); j++) {
-                Student s = students.get(j);
-                if (s.getYear().equalsIgnoreCase(year)) {
-                    count++;
-                }
-            }
-            System.out.println((i + 1) + ". " + year + " - " + count);
-        }
+        return count;
     }
 
     public void topStudents() {
