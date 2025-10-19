@@ -162,7 +162,8 @@ public class Manager {
                 students.sort((s1, s2) -> s1.getCourse().compareTo(s2.getCourse()));
                 showDetails();
                 break;
-
+            default:
+                System.out.println("Invalid number!");
         }
     }
 
@@ -199,19 +200,21 @@ public class Manager {
                 "No.", "Name", "GPA");
         System.out.println("----------------------------------------------------------------------------");
         for (int i = 0; i < 3; i++) {
-            System.out.printf("%-4d | %s%n", (i + 1), students.get(i).toString());
+            System.out.printf("%-4d | %s%n", (i + 1), students.get(i).getFullName(), students.get(i).getGPA());
         }
         String[] courses = {"BSArch", "BSCE", "BSCpE", "BSIT-MWA", "BSCS-ML"};
 
         //iterating by course
         for (int i = 0; i < courses.length; i++) {
             String course = courses[i];
-            System.out.println("\nTop 3 Students for " + course + ":");
+            System.out.println("\n------- Top 3 Students for " + course + " ------");
+            System.out.println("--------------------------------------------");
             System.out.printf("%-4s | %-26s |  %-4s%n",
                     "No.", "Name", "GPA");
-            System.out.println("----------------------------------------------------------------------------");
-
-            int count = 0; // track how many students printed
+            System.out.println("--------------------------------------------");
+            
+            // track how many students printed
+            int count = 0; 
 
             //iterate all students by specific course
             for (int j = 0; j < students.size(); j++) {
@@ -231,7 +234,7 @@ public class Manager {
             // If no students found for that course
             if (count == 0) {
                 System.out.println("No students found for this course.");
-            }
+            } 
         }
     }
 
