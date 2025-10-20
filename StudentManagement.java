@@ -64,7 +64,7 @@ public class StudentManagement {
     }
 
     public static void signUp(Scanner scan) {
-        System.out.println("\n================ Registration ==================");
+        System.out.println("\n================ Sign Up ==================");
         //checks if email ends with @gmail.com, outlook, and dnmu.edu.ph
         String email = "";
         boolean validEmail = false;
