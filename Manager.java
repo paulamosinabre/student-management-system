@@ -11,11 +11,21 @@ public class Manager {
     }
 
     public void add(Student student) {
+        // checks for duplicate if it matches the full name, course, and year
+        for (Student s : students) {
+            if (s.getFullName().equalsIgnoreCase(student.getFullName())
+                    && s.getCourse().equalsIgnoreCase(student.getCourse())
+                    && s.getYear().equalsIgnoreCase(student.getYear())) {
+                System.out.println("Could not add student. The student already exists.");
+                return;
+            }
+        }
 
-        if (student.getGPA() >= 0 && student.getGPA() <= 4.0) {
+        //checks the validity of GPA
+        if (student.getGPA() >= 0 && student.getGPA() <= 4) {
             students.add(student);
         } else {
-            System.out.println("Could not add student. Make sure the GPA does not exceed 4.0");
+            System.out.println("Could not add student. Make sure the GPA is not a negative number and does not exceed 4.0");
         }
     }
 
@@ -29,6 +39,7 @@ public class Manager {
     }
 
     public boolean isItInTheList(int index) {
+        //determines whether the index falls in the range of the student size
         return index - 1 >= 0 && index - 1 < students.size();
     }
 
@@ -78,11 +89,11 @@ public class Manager {
     }
 
     public void updateGPA(double GPA, int index) {
-        if (isItInTheList(index) && (this.students.get(index - 1).getGPA() >= 0 && this.students.get(index - 1).getGPA() <= 4.0)) {
+        if (isItInTheList(index) && (GPA >= 0 && GPA <= 4)) {
             System.out.println("The GPA has been updated from " + this.students.get(index - 1).getGPA() + " to " + GPA);
             this.students.get(index - 1).setGPA(GPA);
         } else {
-            System.out.println("Invalid number!");
+            System.out.println("Could not update student. Make sure the GPA is not a negative number and does not exceed 4.0");
         }
     }
 
@@ -91,6 +102,7 @@ public class Manager {
             return false;
         }
 
+        //Exception handling to avoid errors
         try {
             Double.parseDouble(search);
             return true;
@@ -207,14 +219,14 @@ public class Manager {
         //iterating by course
         for (int i = 0; i < courses.length; i++) {
             String course = courses[i];
-            System.out.println("\n------- Top 3 Students for " + course + " ------");
+            System.out.println("\n------- Top 3 Students from " + course + " ------");
             System.out.println("--------------------------------------------");
             System.out.printf("%-4s | %-26s |  %-4s%n",
                     "No.", "Name", "GPA");
             System.out.println("--------------------------------------------");
-            
+
             // track how many students printed
-            int count = 0; 
+            int count = 0;
 
             //iterate all students by specific course
             for (int j = 0; j < students.size(); j++) {
@@ -234,7 +246,7 @@ public class Manager {
             // If no students found for that course
             if (count == 0) {
                 System.out.println("No students found for this course.");
-            } 
+            }
         }
     }
 
