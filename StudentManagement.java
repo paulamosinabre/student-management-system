@@ -9,20 +9,29 @@ public class StudentManagement {
     static ArrayList<User> usersList = new ArrayList();
     static Manager manager = new Manager();
 
-    public static void startPage(Scanner scan) {
+    public static int exceptionHandler(Scanner scan, String message) {
         while (true) {
-            System.out.println("\n============ Welcome to DNM University =========");
-            System.out.println("1. Sign-up");
-            System.out.println("2. Login");
-            System.out.println("0. Exit");
-            System.out.println("================================================");
+            try {
+                System.out.print(message);
+                int choice = scan.nextInt();
+                scan.nextLine();
+                return choice;
+            } catch (Exception e) {
+                System.out.println("Invalid input! Please type a number.");
+                scan.nextLine();
+            }
+        }
+    }
 
-            System.out.print("\nChoose an action: ");
-            int startAction = scan.nextInt();
-            //for debugging purposes
-            scan.nextLine();
-
-            switch (startAction) {
+    public static void startPage(Scanner scan) {
+        System.out.println("\n============ Welcome to DNM University =========");
+        System.out.println("1. Sign-up");
+        System.out.println("2. Login");
+        System.out.println("0. Exit");
+        System.out.println("================================================");
+        while (true) {
+            int option = exceptionHandler(scan, "\nChoose an action: ");
+            switch (option) {
                 case 1:
                     signUp(scan);
                     break;
@@ -30,10 +39,10 @@ public class StudentManagement {
                     login(scan);
                     break;
                 case 0:
-                    System.out.println("Closing...");
-                    scan.close();
+                    System.out.println("Exiting...");
+                    System.exit(0);
                 default:
-                    System.out.println("Invalid input!");
+                    System.out.println("Invalid input! Please enter a number from 0-2.");
             }
         }
     }
@@ -64,7 +73,7 @@ public class StudentManagement {
     }
 
     public static void signUp(Scanner scan) {
-        System.out.println("\n================ Sign Up ==================");
+        System.out.println("\n================ Sign Up =======================");
         //checks if email ends with @gmail.com, outlook, and dnmu.edu.ph
         String email = "";
         boolean validEmail = false;
@@ -161,11 +170,9 @@ public class StudentManagement {
                     System.out.println((i + 1) + ". " + str[i]);
                 }
             }
-            
-            System.out.print("Choose a " + label.toLowerCase() + ": ");
-            int option = scan.nextInt();
-            scan.nextLine();
-            
+
+            int option = exceptionHandler(scan, "Choose a " + label.toLowerCase() + ": ");
+
             //checks the option validity whether it falls within the range
             if (option >= 1 && option <= str.length) {
                 return str[option - 1];
@@ -212,9 +219,7 @@ public class StudentManagement {
 
     public static void updateStudent(Scanner scan) {
         manager.showDetails();
-        System.out.print("\nEnter no. to update: ");
-        int num = scan.nextInt();
-        scan.nextLine();
+        int num = exceptionHandler(scan, "\nEnter no. to update: ");
 
         //check if index is valid
         if (!manager.isItInTheList(num)) {
@@ -229,14 +234,12 @@ public class StudentManagement {
         System.out.println("4. Course");
         System.out.println("5. Year");
         System.out.println("6. GPA");
-        System.out.print("\nChoose an option to update: ");
-        int updateOption = scan.nextInt();
-        scan.nextLine();
-        switch (updateOption) {
+        int option = exceptionHandler(scan, "\nChoose an option to update: ");
+        switch (option) {
             case 1:
                 System.out.print("\nEnter first name: ");
                 String firstName = scan.nextLine();
-                
+
                 manager.updateFirstName(firstName, num);
                 break;
             case 2:
@@ -278,42 +281,38 @@ public class StudentManagement {
         System.out.println("4. GPA (From Highest-Lowest)");
         System.out.println("5. Course");
         System.out.println("================================================");
-        System.out.print("Sort by: ");
-        int sortChooser = scan.nextInt();
-        scan.nextLine();
+
+        int sortChooser = exceptionHandler(scan, "Sort by: ");
 
         manager.sortBy(sortChooser);
     }
 
     public static void viewTotalNum(String category, String[] items) {
-        System.out.println(category + ":");
+        System.out.println("\n" + category + ":");
         //shows the number of students by iterating based on category and items
         for (int i = 0; i < items.length; i++) {
-            System.out.println((i + 1) + ". " + items[i] + ": " + manager.totalStudents(category, items[i]));
+            System.out.println(items[i] + ": " + manager.totalStudents(category, items[i]));
         }
     }
 
     public static void home(Scanner scan, User user) {
-        while (true) {
-            System.out.println("\n================ DNM University ===============");
-            System.out.println("1. Add Student");
-            System.out.println("2. Update Student");
-            System.out.println("3. Delete Student");
-            System.out.println("4. Search Student");
-            System.out.println("5. Sort Students");
-            System.out.println("6. Display All Students");
-            System.out.println("7. Show Top 3 students");
-            System.out.println("8. View the Total No. of Students");
-            System.out.println("9. View My Account");
-            System.out.println("10. Log-out");
-            System.out.println("0. Exit");
-            System.out.println("================================================");
-
-            System.out.print("\nEnter your choice: ");
-            int action = scan.nextInt();
-            scan.nextLine();
-
-            switch (action) {
+    while(true){
+        System.out.println("\n================ DNM University ===============");
+        System.out.println("1. Add Student");
+        System.out.println("2. Update Student");
+        System.out.println("3. Delete Student");
+        System.out.println("4. Search Student");
+        System.out.println("5. Sort Students");
+        System.out.println("6. Display All Students");
+        System.out.println("7. Show Top 3 students");
+        System.out.println("8. View the Total No. of Students");
+        System.out.println("9. View My Account");
+        System.out.println("10. Log-out");
+        System.out.println("0. Exit");
+        System.out.println("================================================");
+        
+            int option = exceptionHandler(scan, "\nEnter your choice: ");
+            switch (option) {
                 case 1:
                     addStudent(scan);
                     break;
@@ -324,8 +323,8 @@ public class StudentManagement {
 
                 case 3:
                     manager.showDetails();
-                    System.out.print("\nEnter a number to delete: ");
-                    int num = scan.nextInt();
+
+                    int num = exceptionHandler(scan, "\nEnter a number to delete: ");
 
                     manager.delete(num);
                     break;
@@ -369,7 +368,7 @@ public class StudentManagement {
                     startPage(scan);
                     break;
                 case 0:
-                    System.out.println("Closing...");
+                    System.out.println("Exiting...");
                     System.exit(0);
                 default:
                     System.out.println("Invalid number! Please type a number between 0-10.");
