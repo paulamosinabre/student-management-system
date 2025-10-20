@@ -79,7 +79,7 @@ public class StudentManagement {
             }
         }
 
-        //create a validation that it must be a number and it should contain exactly 11 numbers
+        //validates that it should contain exactly 11 numbers
         String contactNumber = "";
         boolean validNumber = false;
         while (!validNumber) {
@@ -96,7 +96,7 @@ public class StudentManagement {
         System.out.print("Enter your username: ");
         String username = scan.nextLine();
 
-        //create a validation that it should contain one special character, atleast one uppercase, atleast one lowercase
+        //validates that it should contain one special character, atleast one uppercase, atleast one lowercase
         String password = "";
         boolean validPassword = false;
         while (!validPassword) {
@@ -126,7 +126,7 @@ public class StudentManagement {
         System.out.print("Enter your password: ");
         String password = scan.nextLine();
 
-        //create a validation that if the user is found, proceed to home, if not then login again
+        //checks if the entered username and password matches any registered users
         boolean found = false;
         for (User user : usersList) {
             if (user.getUsername().equals(username)) {
@@ -149,8 +149,11 @@ public class StudentManagement {
     }
 
     public static String chooser(Scanner scan, String[] str, String label) {
+        //minimizes repetitive printing and input prompts
+        //loops until the number is valid
         while (true) {
             System.out.print("\n" + label);
+            //display the list of choices
             for (int i = 0; i < str.length; i++) {
                 if (i == 0) {
                     System.out.println("\n" + (i + 1) + ". " + str[i]);
@@ -158,11 +161,12 @@ public class StudentManagement {
                     System.out.println((i + 1) + ". " + str[i]);
                 }
             }
-
+            
             System.out.print("Choose a " + label.toLowerCase() + ": ");
             int option = scan.nextInt();
             scan.nextLine();
-
+            
+            //checks the option validity whether it falls within the range
             if (option >= 1 && option <= str.length) {
                 return str[option - 1];
             } else {
@@ -194,7 +198,7 @@ public class StudentManagement {
         System.out.print("Enter GPA: ");
         double GPA = scan.nextDouble();
 
-        //TO DO: GENERATE A RANDOM NUMBER FOR STUDENT ID
+        //generates a random student-id number 
         String id = "2025-" + (1000000 + (int) (Math.random() * 1000000));
 
         //validation to check if middle name is empty or not
@@ -283,6 +287,7 @@ public class StudentManagement {
 
     public static void viewTotalNum(String category, String[] items) {
         System.out.println(category + ":");
+        //shows the number of students by iterating based on category and items
         for (int i = 0; i < items.length; i++) {
             System.out.println((i + 1) + ". " + items[i] + ": " + manager.totalStudents(category, items[i]));
         }
